@@ -9,23 +9,25 @@ function acf_photo_gallery_save( $post_id ){
 	// unhook this function so it doesn't loop infinitely
 	remove_action( 'save_post', 'acf_photo_gallery_save' );
 
-	$field = isset($_POST['acf-photo-gallery-groups'])? $_POST['acf-photo-gallery-groups']: null;
-	
-	if( !empty($field) ){
-		$field_key = $_POST['acf-photo-gallery-field'];
-		foreach($field as $k => $v ){
-			$field_id = isset($_POST['acf-photo-gallery-groups'][$k])? $_POST['acf-photo-gallery-groups'][$k]: null;
-            if (!empty($field_id)) {
-                $ids = !empty($field) && isset($_POST[$field_id])? $_POST[$field_id]: null;
-                if (!empty($ids)) {
-                    $ids = implode(',', $ids);
-                    update_post_meta($post_id, $field_id, $ids);
-                    acf_update_metadata($post_id, $field_id, $field_key, true);
-                } else {
-                    delete_post_meta($post_id, $v);
-                    acf_delete_metadata($post_id, $field_id, true);
-                }
-            }
+	// make array of [field_name => field_key]
+	$fields = [];
+	$field_names = isset($_POST['acf-photo-gallery-groups']) ? $_POST['acf-photo-gallery-groups'] : [];
+	$field_keys = isset($_POST['acf-photo-gallery-field']) ? $_POST['acf-photo-gallery-field'] : [];
+	if (count($field_names) == count($field_keys)) {
+		$fields = array_combine($field_names, $field_keys);
+	}
+
+	if (!empty($fields)) {
+		foreach ($fields as $name => $key) {
+			$ids = isset($_POST[$name]) ? $_POST[$name] : [];
+			if (!empty($ids)) {
+				$ids = implode(',', $ids);
+				update_post_meta($post_id, $name, $ids);
+				acf_update_metadata($post_id, $name, $key, true);
+			} else {
+				delete_post_meta($post_id, $name);
+				acf_delete_metadata($post_id, $name, true);
+			}
 		}
 	}
 
