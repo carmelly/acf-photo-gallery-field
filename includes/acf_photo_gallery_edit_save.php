@@ -2,11 +2,11 @@
 
 //Fires off when ediitn the details of the photo
 function acf_photo_gallery_edit_save(){
-	if( wp_verify_nonce( $_POST['acf-pg-hidden-nonce'], 'acf_photo_gallery_edit_save') and !empty($_POST['acf-pg-hidden-field']) and !empty($_POST['acf-pg-hidden-post'])  and !empty($_POST['acf-pg-hidden-attachment']) ){
+	if (wp_verify_nonce($_POST['acf-pg-hidden-nonce'], 'acf_photo_gallery_edit_save') and !empty($_POST['acf-pg-hidden-field'])  and !empty($_POST['acf-pg-hidden-attachment'])) {
 
 		$request = $_POST;
 		$field = sanitize_text_field($request['acf-pg-hidden-field']);
-		$post = sanitize_text_field($request['acf-pg-hidden-post']);
+		// $post = sanitize_text_field($request['acf-pg-hidden-post']);
 		$attachment = sanitize_text_field($request['acf-pg-hidden-attachment']);
 		$title = sanitize_text_field($request['title']);
 		$caption = sanitize_textarea_field($request['caption']);

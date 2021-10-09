@@ -1,42 +1,42 @@
 <div id="acf-photo-gallery-metabox-edit-<?php echo $attachment; ?>" class="acf-edit-photo-gallery">
     <h3>Edit Image</h3>
-    <input class="acf-photo-gallery-edit-field" type="hidden" name="acf-pg-hidden-field" value="<?php echo $field; ?>"/>
-    <input class="acf-photo-gallery-edit-field" type="hidden" name="acf-pg-hidden-post" value="<?php echo $_GET['post']; ?>"/>
-    <input class="acf-photo-gallery-edit-field" type="hidden" name="acf-pg-hidden-attachment" value="<?php echo $attachment; ?>"/>
-    <input class="acf-photo-gallery-edit-field" type="hidden" name="acf-pg-hidden-action" value="acf_photo_gallery_edit_save"/>
-    <input class="acf-photo-gallery-edit-field" type="hidden" name="acf-pg-hidden-nonce" value="<?php echo $nonce; ?>"/>
+    <input class="acf-photo-gallery-edit-field" type="hidden" name="acf-pg-hidden-field" value="<?php echo $field; ?>" />
+    <input class="acf-photo-gallery-edit-field" type="hidden" name="acf-pg-hidden-post" value="<?php echo isset($_GET['post']) ? $_GET['post'] : ''; ?>" />
+    <input class="acf-photo-gallery-edit-field" type="hidden" name="acf-pg-hidden-attachment" value="<?php echo $attachment; ?>" />
+    <input class="acf-photo-gallery-edit-field" type="hidden" name="acf-pg-hidden-action" value="acf_photo_gallery_edit_save" />
+    <input class="acf-photo-gallery-edit-field" type="hidden" name="acf-pg-hidden-nonce" value="<?php echo $nonce; ?>" />
     <?php
-        foreach( $fields as $key => $item ){
-            $type = ($item['type'])?$item['type']:null;
-            $label = $item['label']?$item['label']:null;
-            $name = $item['name']?$item['name']:null;
-            $value = $item['value']?$item['value']:null;
+    foreach ($fields as $key => $item) {
+        $type = ($item['type']) ? $item['type'] : null;
+        $label = $item['label'] ? $item['label'] : null;
+        $name = $item['name'] ? $item['name'] : null;
+        $value = $item['value'] ? $item['value'] : null;
     ?>
-        <?php if( in_array($type, array('text', 'date', 'color', 'datetime-local', 'email', 'number', 'tel', 'time', 'url', 'week', 'range')) ){ ?>
+        <?php if (in_array($type, array('text', 'date', 'color', 'datetime-local', 'email', 'number', 'tel', 'time', 'url', 'week', 'range'))) { ?>
             <label><?php echo $label; ?></label>
-            <input class="acf-photo-gallery-edit-field" type="<?php echo $type; ?>" name="<?php echo $name; ?>" value="<?php echo $value; ?>"/>
+            <input class="acf-photo-gallery-edit-field" type="<?php echo $type; ?>" name="<?php echo $name; ?>" value="<?php echo $value; ?>" />
         <?php } ?>
-        <?php if( $type == 'checkbox' ){ ?>
+        <?php if ($type == 'checkbox') { ?>
             <label>
-                <input class="acf-photo-gallery-edit-field" type="checkbox" name="<?php echo $name; ?>" value="true" <?php echo ($value=='true')?'checked':''; ?>/>
+                <input class="acf-photo-gallery-edit-field" type="checkbox" name="<?php echo $name; ?>" value="true" <?php echo ($value == 'true') ? 'checked' : ''; ?> />
                 <?php echo $label; ?>
             </label>
         <?php } ?>
-        <?php if( $type == 'radio' ){ ?>
+        <?php if ($type == 'radio') { ?>
             <label>
-                <input class="acf-photo-gallery-edit-field" type="radio" name="<?php echo $name; ?>" value="true" <?php echo ($value=='true')?'checked':''; ?>/>
+                <input class="acf-photo-gallery-edit-field" type="radio" name="<?php echo $name; ?>" value="true" <?php echo ($value == 'true') ? 'checked' : ''; ?> />
                 <?php echo $label; ?>
             </label>
         <?php } ?>
-        <?php if( $type == 'textarea' ){ ?>
+        <?php if ($type == 'textarea') { ?>
             <label><?php echo $label; ?></label>
             <textarea class="acf-photo-gallery-edit-field" name="<?php echo $name; ?>"><?php echo $value; ?></textarea>
         <?php } ?>
-        <?php if( $type == 'select' ){ ?>
+        <?php if ($type == 'select') { ?>
             <label><?php echo $label; ?></label>
             <select class="acf-photo-gallery-edit-field" name="<?php echo $name; ?>">
-                <?php foreach($value[0] as $key => $item){ ?>
-                    <option value="<?php echo $key; ?>" <?php echo $key==$value[1]?'selected':''; ?>><?php echo $item; ?></option>
+                <?php foreach ($value[0] as $key => $item) { ?>
+                    <option value="<?php echo $key; ?>" <?php echo $key == $value[1] ? 'selected' : ''; ?>><?php echo $item; ?></option>
                 <?php } ?>
             </select>
         <?php } ?>
